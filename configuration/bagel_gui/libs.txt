@@ -1,0 +1,2 @@
+cfg_manager_gui
+bagel_gui

@@ -1,0 +1,4 @@
+bagel_node_definitions: node_config.yml
+task_node_definitions: ../../share/orogen/models
+HeaderFontSize: 10
+PortFontSize: 8

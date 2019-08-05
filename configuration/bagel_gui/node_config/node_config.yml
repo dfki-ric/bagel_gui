@@ -1,0 +1,21 @@
+nodes:
+  - name: INPUT
+    type: INPUT
+    outputs: [name: out1]
+  - name: OUTPUT
+    type: OUTPUT
+    inputs:
+      - {name: in1, URI: merge.yml}
+  - {name: PIPE, type: PIPE, URI: port1x1.yml}
+  - {name: SIN, type: SIN, URI: port1x1.yml}
+  - {name: ASIN, type: ASIN, URI: port1x1.yml}
+  - {name: COS, type: COS, URI: port1x1.yml}
+  - {name: TAN, type: TAN, URI: port1x1.yml}
+  - {name: DIV, type: DIVIDE, URI: port1x1.yml}
+  - {name: ABS, type: ABS, URI: port1x1.yml}
+  - {name: POW, type: POW, URI: port2x1.yml}
+  - {name: MOD, type: MOD, URI: port2x1.yml}
+  - {name: ">0", type: ">0", URI: port3x1.yml}
+  - {name: "==0", type: "==0", URI: port3x1.yml}
+  - {name: DES, type: DES}
+  - {name: META, type: META}

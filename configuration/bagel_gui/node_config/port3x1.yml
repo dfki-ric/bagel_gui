@@ -1,0 +1,5 @@
+inputs:
+  - {name: in1, idx: 0, URI: merge.yml}
+  - {name: in2, idx: 1, URI: merge.yml}
+  - {name: in3, idx: 2, URI: merge.yml}
+outputs: [name: out1]

@@ -1,0 +1,1 @@
+gui_app dock config_path="${AUTOPROJ_CURRENT_ROOT}/install/configuration/bagel_gui" $@
