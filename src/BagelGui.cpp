@@ -676,6 +676,12 @@ namespace bagel_gui {
 #endif
     view->resize(viz->width()*devicePixelRatio_,
                  viz->height()*devicePixelRatio_);
+    // for newer Qt versions we need to draw a first frame to be able
+    // to init new tabs
+    if(first) {
+      first = false;
+      viewer->frame();
+    }
     if(!timer->isRunning()) {
       timer->run();
     }
