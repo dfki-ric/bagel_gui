@@ -703,11 +703,19 @@ namespace bagel_gui {
   }
 
   void BagelGui::save(const std::string &filename) {
-    loader->save(createConfigMap(), filename);
+    std::string fileName = filename;
+    if(mars::utils::getFilenameSuffix(fileName) == "") {
+      fileName += ".yml";
+    }
+    loader->save(createConfigMap(), fileName);
   }
 
   void BagelGui::exportCndFile(const std::string &filename) {
-    loader->exportCnd(createConfigMap(), filename);
+    std::string fileName = filename;
+    if(mars::utils::getFilenameSuffix(fileName) == "") {
+      fileName += ".yml";
+    }
+    loader->exportCnd(createConfigMap(), fileName);
   }
 
   void BagelGui::setDirectLineMode() {
