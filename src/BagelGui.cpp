@@ -223,7 +223,9 @@ namespace bagel_gui {
     delete viewer;
     delete timer;
     delete slotWrapper;
+#ifndef USE_QT5
     if(mainWidget) delete mainWidget;
+#endif
     //if(slotWrapper) delete slotWrapper;
   }
 
