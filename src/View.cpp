@@ -56,7 +56,9 @@ namespace bagel_gui {
     useForceLayout = false;
     model = NULL;
     view = new osg_graph_viz::View();
-    view->setResourcesPath(resourcesPath);
+    if(resourcesPath != "") {
+      view->setResourcesPath(resourcesPath + "/osg_graph_viz/");
+    }
     view->init(hFontSize, pFontSize, ps, classicLook);
     view->setUpdateInterface(this);
     osgView = new osgViewer::View();

@@ -59,11 +59,14 @@ namespace bagel_gui {
     // this is corrected by mars_graphics but result in an offset
     // after scaling the value for osg_graph_viz
     confDir = ".";
-    resourcesPath = ".";
+    resourcesPath = BAGEL_DEFAULT_RESOURCES_PATH;
     if(cfg) {
-      resourcesPath = cfg->getOrCreateProperty("Preferences",
-                                               "resources_path",
-                                               ".").sValue;
+      resourcesPathConfig = cfg->getOrCreateProperty("Preferences",
+                                                     "resources_path",
+                                                     "").sValue;
+      if(resourcesPathConfig != "") {
+        resourcesPath = resourcesPathConfig;
+      }
       cfg->getPropertyValue("Config", "config_path", "value", &confDir);
     }
     fprintf(stderr, "configPath: %s\n", confDir.c_str());
@@ -640,7 +643,7 @@ namespace bagel_gui {
 
 
     View *v = new View(this, sharedGLContext, ntWidget, hWidget, dw,
-                       confDir, resourcesPath+"/osg_graph_viz/",
+                       confDir, resourcesPathConfig,
                        (double) config["HeaderFontSize"],
                        (double) config["PortFontSize"],
                        (double) config["PortIconScale"],

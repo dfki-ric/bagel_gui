@@ -17,6 +17,8 @@ else(${USE_TR1})
     ADD_DEFINITIONS(-DNO_TR1)
 endif()
 
+add_definitions(-DBAGEL_DEFAULT_RESOURCES_PATH=\"${CMAKE_INSTALL_PREFIX}/share\")
+
 pkg_check_modules(OSGQT openscenegraph-osgQt5)
 if(OSGQT_FOUND)
 find_package(OpenSceneGraph REQUIRED osgManipulator osgViewer osgFX osgShadow osgParticle osgTerrain osgDB osgGA osgWidget osgText osgUtil)

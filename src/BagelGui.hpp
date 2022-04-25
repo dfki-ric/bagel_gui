@@ -148,7 +148,7 @@ namespace bagel_gui {
     bool updateSize;
 
     bool autoUpdate;
-    std::string confDir, resourcesPath;
+    std::string confDir, resourcesPath, resourcesPathConfig;
     osgViewer::CompositeViewer *viewer;
 
     NodeLoader *loader;
