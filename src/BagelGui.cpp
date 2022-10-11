@@ -872,7 +872,14 @@ namespace bagel_gui {
       timer->stop();
     }
   }
-
+void BagelGui::closeCurrentTab()
+{
+  QWidget *tab = dynamic_cast<QWidget*>( mainWidget->currentWidget());
+  QObject::disconnect( tab, 0, 0, 0 );
+  tab->close();
+  delete tab;
+  tab = NULL;
+}
   bool BagelGui::groupNodes(const std::string &parent, const std::string &child) {
     if(currentTabView) {
       return currentTabView->groupNodes(parent, child);

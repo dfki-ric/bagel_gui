@@ -98,6 +98,7 @@ namespace bagel_gui {
     void setModel(std::string model);
     void setTab(int index);
     void closeTab(int index);
+    void closeCurrentTab();
     ModelInterface* getCurrentModel();
 
     std::string getNodeName(unsigned long id);
