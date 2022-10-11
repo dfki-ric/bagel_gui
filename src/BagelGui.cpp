@@ -587,6 +587,7 @@ namespace bagel_gui {
 
   bool BagelGui::hasEdge(ConfigMap edgeMap) {
     if(currentTabView) return currentTabView->hasEdge(edgeMap);
+    return false;
   }
 
   osg_graph_viz::NodeInfo BagelGui::getNodeInfo(const std::string &name) {

@@ -389,7 +389,7 @@ namespace bagel_gui {
   }
 
   bool BagelModel::getNode(const std::string &name, configmaps::ConfigMap **map) {
-    bool found = false;
+    //bool found = false;
     std::map<unsigned long, configmaps::ConfigMap>::iterator it;
     for(it=nodeMap.begin(); it!=nodeMap.end(); ++it) {
       if(it->second["name"].getString() == name) {
