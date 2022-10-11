@@ -66,7 +66,7 @@ namespace bagel_gui {
         }
         infoMap[info.type] = info;
         //bagelGui->addNodeType(info);
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelModel: error loading node %s from file: %s\n",
                 it["name"].getString().c_str(), filename.c_str());
         std::cerr << e.what() << std::endl;
@@ -80,7 +80,7 @@ namespace bagel_gui {
           if(absPath[absPath.size()-1] != '/') absPath.append("/");
           mars::utils::removeFilenamePrefix(&filename);
           loadSubgraphInfo(filename, absPath);
-        } catch (std::exception e) {
+        } catch (const std::exception& e) {
           fprintf(stderr, "BagelModel: error loading subgraph %s from file: %s\n",
                   it.getString().c_str(), filename.c_str());
           std::cerr << e.what() << std::endl;
@@ -96,7 +96,7 @@ namespace bagel_gui {
         }
         getExternNodes(file);
         externNodePath = "";
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelModel: Error loading extern nodes from: %s\n", filename.c_str());
         std::cerr << e.what() << std::endl;
       }
@@ -368,7 +368,7 @@ namespace bagel_gui {
         }
         ConfigVector::iterator vt = map["actuators"].begin();
         std::vector<std::string>::iterator lt;
-        int i=0;
+        size_t i=0;
         for(; vt!=map["actuators"].end(); ++vt) {
           if(i>=chainNode["outputs"].size()) break;
           std::string motorName = vt->getString()+"/des_angle";

@@ -170,7 +170,7 @@ namespace bagel_gui {
         if(!reload) {
           //fprintf(stderr, "load node: %lu %s\n", id, info.map["name"].c_str());
         }
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelLoader: Error loading node: %s\n",
                 it["name"].getString().c_str());
         std::cerr << e.what() << std::endl;
@@ -207,7 +207,7 @@ namespace bagel_gui {
         if(!reload) {
           fprintf(stderr, "load description: %lu %s\n", id, info.map["name"].c_str());
         }
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelLoader: Error loading description: %s\n",
                 it["name"].getString().c_str());
         std::cerr << e.what() << std::endl;
@@ -239,7 +239,7 @@ namespace bagel_gui {
         if(!reload) {
           fprintf(stderr, "load meta: %lu %s\n", id, info.map["name"].c_str());
         }
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelLoader: Error loading meta: %s\n",
                 it["name"].getString().c_str());
         std::cerr << e.what() << std::endl;
@@ -268,7 +268,7 @@ namespace bagel_gui {
           edge.erase("toNodeInputIdx");
         }
         bagelGui->addEdge(edge, reload);
-      } catch (std::exception e) {
+      } catch (const std::exception& e) {
         fprintf(stderr, "BagelLoader: Error add edge: %s %s %s %s\n", edge["fromNode"].getString().c_str(),edge["fromNodeOutput"].getString().c_str(),edge["toNode"].getString().c_str(),edge["toNodeInput"].getString().c_str());
         std::cerr << e.what() << std::endl;
       }
