@@ -206,6 +206,11 @@ namespace bagel_gui {
     std::list<osg::ref_ptr<osg_graph_viz::Node> >::iterator it;
     if(nodeIdMap.find(node) != nodeIdMap.end()) {
       unsigned long id = nodeIdMap[node];
+      if(not clearing_graph)
+      {
+        std::cout << "Saving history before removing node...\n";
+        addHistoryEntry();
+      }
 
       if(!model->removeNode(id)) return false;
       nodeIdMap.erase(node);
@@ -629,6 +634,7 @@ namespace bagel_gui {
   }
 
   void View::clearGraph() {
+    clearing_graph = true;
     size_t t;
     nextNodeId = nextEdgeId = nextOrderNumber = 1;
     while(nodeMap.begin() != nodeMap.end()) {
@@ -640,6 +646,7 @@ namespace bagel_gui {
         return;
       }
     }
+    clearing_graph = false;
   }
   void View::undo()
   {
