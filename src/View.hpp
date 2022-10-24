@@ -76,6 +76,8 @@ namespace bagel_gui {
     std::string getOutPortName(std::string nodeName, unsigned long index);
     osg_graph_viz::NodeInfo getNodeInfo(const std::string &name);
     void clearGraph();
+    void undo() override;
+    void redo() override;
     void updateNodeMap(const std::string &nodeName,
                        const configmaps::ConfigMap &map);
     const configmaps::ConfigMap* getNodeMap(const std::string &nodeName);
@@ -117,6 +119,7 @@ namespace bagel_gui {
     mars::config_map_gui::DataWidget *dWidget;
     std::string confDir, resourcesPath, modelName;
     unsigned long lastAdd;
+    ssize_t historyIndex = -1;
 
     // node info container
     std::map<unsigned long, osg::ref_ptr<osg_graph_viz::Node> > nodeMap;

@@ -304,7 +304,7 @@ namespace bagel_gui {
     lastAdd = nextNodeId;
     model->preAddNode(nextNodeId++);
     //fprintf(stderr, "added node '%s'\n", string(info.map["name"]).c_str());
-  }
+  } 
 
   std::string View::handleNodeName(std::string name, std::string type) {
     std::string newName = name;
@@ -641,7 +641,38 @@ namespace bagel_gui {
       }
     }
   }
+  void View::undo()
+  {
+    if (history.empty())
+      return;
+    if (historyIndex == 0)
+      return;
+    if (historyIndex == -1)
+    {
+      historyIndex = history.size() - 1;
+      loadHistory(historyIndex);
+      return;
+    }
 
+    historyIndex--;
+    loadHistory(historyIndex);
+  }
+  void View::redo()
+  {
+    if (history.empty())
+      return;
+    if (static_cast<size_t>(historyIndex) == history.size() - 1)
+      return;
+    if (historyIndex == -1)
+    {
+      historyIndex = 0;
+      loadHistory(historyIndex);
+      return;
+    }
+
+    historyIndex++;
+    loadHistory(historyIndex);
+  }
   bool View::groupNodes(const std::string &parent, const std::string &child) {
     unsigned long groupId=0, nodeId;
     osg::ref_ptr<osg_graph_viz::Node> node;
