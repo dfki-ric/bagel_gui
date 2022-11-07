@@ -650,35 +650,29 @@ namespace bagel_gui {
   }
   void View::undo()
   {
+    static ssize_t index = -1;
     if (history.empty())
       return;
-    if (historyIndex == 0)
+    else if (index == 0)
       return;
-    if (historyIndex == -1)
-    {
-      historyIndex = history.size() - 1;
-      loadHistory(historyIndex);
-      return;
-    }
-
-    historyIndex--;
-    loadHistory(historyIndex);
+    else if (index == -1)
+      index = static_cast<ssize_t>(history.size() - 1);
+    else
+      index--;
+    loadHistory(index);
   }
   void View::redo()
   {
+    static ssize_t index = -1;
     if (history.empty())
       return;
-    if (static_cast<size_t>(historyIndex) == history.size() - 1)
+    else if (static_cast<size_t>(index) == history.size() - 1)
       return;
-    if (historyIndex == -1)
-    {
-      historyIndex = 0;
-      loadHistory(historyIndex);
-      return;
-    }
-
-    historyIndex++;
-    loadHistory(historyIndex);
+    else if (index == -1)
+      index = 0;
+    else
+      index++;
+    loadHistory(index);
   }
   bool View::groupNodes(const std::string &parent, const std::string &child) {
     unsigned long groupId=0, nodeId;
