@@ -311,7 +311,7 @@ namespace bagel_gui {
     //fprintf(stderr, "added node '%s'\n", string(info.map["name"]).c_str());
   } 
 
-  std::string View::handleNodeName(std::string name, std::string type) {
+  std::string View::handleNodeName(const std::string& name, const std::string&type) {
     std::string newName = name;
     { // generate name if not given
       if(newName == "") {
@@ -442,7 +442,7 @@ namespace bagel_gui {
     return std::string();
   }
 
-  std::string View::getInPortName(std::string nodeName, unsigned long index) {
+  std::string View::getInPortName(const std::string& nodeName, unsigned long index) {
     osg::ref_ptr<osg_graph_viz::Node> node = getNodeByName(nodeName);
     if(node.valid()) {
       return node->getInPortName(index);
@@ -450,7 +450,7 @@ namespace bagel_gui {
     return std::string();
   }
 
-  std::string View::getOutPortName(std::string nodeName, unsigned long index) {
+  std::string View::getOutPortName(const std::string& nodeName, unsigned long index) {
     osg::ref_ptr<osg_graph_viz::Node> node = getNodeByName(nodeName);
     if(node.valid()) {
       return node->getOutPortName(index);

@@ -72,8 +72,8 @@ namespace bagel_gui {
     void addEdge(configmaps::ConfigMap edgeMap, bool reload);
     bool hasEdge(configmaps::ConfigMap edgeMap);
     std::string getNodeName(unsigned long id);
-    std::string getInPortName(std::string nodeName, unsigned long index);
-    std::string getOutPortName(std::string nodeName, unsigned long index);
+    std::string getInPortName(const std::string& nodeName, unsigned long index);
+    std::string getOutPortName(const std::string& nodeName, unsigned long index);
     osg_graph_viz::NodeInfo getNodeInfo(const std::string &name);
     void clearGraph();
     void undo() override;
@@ -135,8 +135,8 @@ namespace bagel_gui {
     bool useForceLayout;
     configmaps::ConfigMap currentLayout;
 
-    std::string handleNodeName(std::string name, std::string type);
-    osg::ref_ptr<osg_graph_viz::Node> getNodeByName(const std::string&);
+    std::string handleNodeName(const std::string& name, const std::string&  type);
+    osg::ref_ptr<osg_graph_viz::Node> getNodeByName(const std::string& name);
     unsigned long getNodeId(const std::string &name);
       /*
     * Since we are saving history before we remove a node, when we click a history item to be applied

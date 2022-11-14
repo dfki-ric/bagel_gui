@@ -68,6 +68,7 @@ namespace bagel_gui {
     void updateMap(const configmaps::ConfigMap &map);
     void updateNodeTypes();
     void loadHistory(size_t index);
+    View* getCurrentTabView();
     bool groupNodes(const std::string &parent, const std::string &child);
 
     void setDirectLineMode();
@@ -121,9 +122,9 @@ namespace bagel_gui {
     void addPlugin(PluginInterface *plugin);
     void removePlugin(PluginInterface *plugin);
     void removeNode(const std::string &name);
-    void nodeContextClicked(const std::string s);
-    void inPortContextClicked(const std::string s);
-    void outPortContextClicked(const std::string s);
+    void nodeContextClicked(const std::string& s);
+    void inPortContextClicked(const std::string& s);
+    void outPortContextClicked(const std::string& s);
     std::vector<std::string> getNodeContextStrings(std::string name);
     std::vector<std::string> getInPortContextStrings(std::string nodeName, std::string portName);
     std::vector<std::string> getOutPortContextStrings(std::string nodeName, std::string portName);
