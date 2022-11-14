@@ -17,10 +17,10 @@ namespace bagel_gui {
 
   class BagelModel : public ModelInterface {
   public:
-    BagelModel(BagelGui *bagelGui);
+    explicit BagelModel(BagelGui *bagelGui);
     virtual ~BagelModel() {}
 
-    ModelInterface* clone();
+    ModelInterface* clone() override;
     // load file or directory
     void loadNodeInfo(const std::string &filename);
 
@@ -31,23 +31,23 @@ namespace bagel_gui {
     void addExternNode(configmaps::ConfigMap externMap);
 
     // model interface methods
-    bool addNode(unsigned long nodeId, configmaps::ConfigMap *node);
-    bool addEdge(unsigned long egdeId, configmaps::ConfigMap *node);
-    bool addNode(unsigned long nodeId, const configmaps::ConfigMap &node);
-    bool addEdge(unsigned long egdeId, const configmaps::ConfigMap &edge);
-    bool hasEdge(configmaps::ConfigMap *edge);
-    bool hasEdge(const configmaps::ConfigMap &edge);
-    void preAddNode(unsigned long nodeId);
-    bool updateNode(unsigned long nodeId, configmaps::ConfigMap node);
-    bool updateEdge(unsigned long egdeId, configmaps::ConfigMap edge);
-    bool removeNode(unsigned long nodeId);
-    bool removeEdge(unsigned long edgeId);
-    bool handlePortCompatibility() {return false;}
-    std::map<unsigned long, std::vector<std::string> > getCompatiblePorts(unsigned long nodeId, std::string outPortName) {return std::map<unsigned long, std::vector<std::string> >();}
+    bool addNode(unsigned long nodeId, configmaps::ConfigMap *node) override;
+    bool addEdge(unsigned long egdeId, configmaps::ConfigMap *node) override;
+    bool addNode(unsigned long nodeId, const configmaps::ConfigMap &node) override;
+    bool addEdge(unsigned long egdeId, const configmaps::ConfigMap &edge)override;
+    bool hasEdge(configmaps::ConfigMap *edge) override;
+    bool hasEdge(const configmaps::ConfigMap &edge)override;
+    void preAddNode(unsigned long nodeId)override;
+    bool updateNode(unsigned long nodeId, configmaps::ConfigMap node)override;
+    bool updateEdge(unsigned long egdeId, configmaps::ConfigMap edge)override;
+    bool removeNode(unsigned long nodeId)override;
+    bool removeEdge(unsigned long edgeId)override;
+    bool handlePortCompatibility() override{return false;}
+    std::map<unsigned long, std::vector<std::string> > getCompatiblePorts(unsigned long nodeId, std::string outPortName) override {return std::map<unsigned long, std::vector<std::string> >();}
     bool loadSubgraphInfo(const std::string &filename,
-                          const std::string &absPath);
-    const std::map<std::string, osg_graph_viz::NodeInfo>& getNodeInfoMap() {return infoMap;}
-    bool groupNodes(unsigned long groupNodeId, unsigned long nodeId) {return false;}
+                          const std::string &absPath) override;
+    const std::map<std::string, osg_graph_viz::NodeInfo>& getNodeInfoMap() override {return infoMap;}
+    bool groupNodes(unsigned long groupNodeId, unsigned long nodeId) override {return false;}
     void importSmurf(std::string filename);
     void createInputPortsForSelection(std::list<osg::ref_ptr<osg_graph_viz::Node> > selectedNodes, double portFontSize, double headerFontSize,
                                       bool usePortNames=true);
@@ -56,8 +56,8 @@ namespace bagel_gui {
     bool hasNode(const std::string &nodeName);
     bool hasNodeInfo(const std::string &type);
     bool hasConnection(const std::string &nodeName);
-    void setModelInfo(configmaps::ConfigMap &map);
-    configmaps::ConfigMap& getModelInfo();
+    void setModelInfo(configmaps::ConfigMap &map) override;
+    configmaps::ConfigMap& getModelInfo()override;
 
   private:
     std::map<unsigned long, configmaps::ConfigMap> nodeMap, edgeMap;
