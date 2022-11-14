@@ -967,19 +967,19 @@ void BagelGui::closeCurrentTab()
     }
   }
 
-  void BagelGui::nodeContextClicked(const std::string s) {
+  void BagelGui::nodeContextClicked(const std::string& s) {
     for(auto plugin: plugins) {
       plugin->nodeContextClicked(s);
     }
   }
 
-  void BagelGui::inPortContextClicked(const std::string s) {
+  void BagelGui::inPortContextClicked(const std::string& s) {
     for(auto plugin: plugins) {
       plugin->inPortContextClicked(s);
     }
   }
 
-  void BagelGui::outPortContextClicked(const std::string s) {
+  void BagelGui::outPortContextClicked(const std::string& s) {
     for(auto plugin: plugins) {
       plugin->outPortContextClicked(s);
     }

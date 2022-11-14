@@ -45,7 +45,7 @@ namespace bagel_gui {
     virtual bool removeEdge(unsigned long edgeId) = 0;
     virtual bool loadSubgraphInfo(const std::string &filename,
                                   const std::string &absPath) = 0;
-    virtual std::map<unsigned long, std::vector<std::string> > getCompatiblePorts(unsigned long nodeId, std::string outPortName) = 0;
+    virtual std::map<unsigned long, std::vector<std::string> > getCompatiblePorts(unsigned long nodeId, const std::string& outPortName) = 0;
     virtual bool handlePortCompatibility() = 0;
     virtual const std::map<std::string, osg_graph_viz::NodeInfo>& getNodeInfoMap() = 0;
     virtual bool groupNodes(unsigned long groupNodeId, unsigned long nodeId) = 0;
