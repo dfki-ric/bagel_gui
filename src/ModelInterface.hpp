@@ -36,10 +36,14 @@ namespace bagel_gui {
                          const configmaps::ConfigMap &edge) = 0;
     virtual bool hasEdge(configmaps::ConfigMap *edge) = 0;
     virtual bool hasEdge(const configmaps::ConfigMap &edge) = 0;
+
+    // The update functions change the underlying node map.
+    // They can change the given map, so be sure to use the altered map afterwards!
     virtual bool updateNode(unsigned long nodeId,
-                            configmaps::ConfigMap node) = 0;
+                            configmaps::ConfigMap& node) = 0;
     virtual bool updateEdge(unsigned long egdeId,
-                            configmaps::ConfigMap edge) = 0;
+                            configmaps::ConfigMap& edge) = 0;
+
     virtual void preAddNode(unsigned long nodeId) = 0;
     virtual bool removeNode(unsigned long nodeId) = 0;
     virtual bool removeEdge(unsigned long edgeId) = 0;

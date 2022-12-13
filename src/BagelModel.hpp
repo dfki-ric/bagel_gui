@@ -38,8 +38,8 @@ namespace bagel_gui {
     bool hasEdge(configmaps::ConfigMap *edge) override;
     bool hasEdge(const configmaps::ConfigMap &edge)override;
     void preAddNode(unsigned long nodeId)override;
-    bool updateNode(unsigned long nodeId, configmaps::ConfigMap node)override;
-    bool updateEdge(unsigned long egdeId, configmaps::ConfigMap edge)override;
+    bool updateNode(unsigned long nodeId, configmaps::ConfigMap& node)override;
+    bool updateEdge(unsigned long egdeId, configmaps::ConfigMap& edge)override;
     bool removeNode(unsigned long nodeId)override;
     bool removeEdge(unsigned long edgeId)override;
     bool handlePortCompatibility() override{return false;}

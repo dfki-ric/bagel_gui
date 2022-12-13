@@ -465,7 +465,7 @@ namespace bagel_gui {
     return true;
   }
 
-  bool BagelModel::updateEdge(unsigned long id, configmaps::ConfigMap edge) {
+  bool BagelModel::updateEdge(unsigned long id, configmaps::ConfigMap& edge) {
     // todo: bug here
     if(edgeMap.find(id) == edgeMap.end()) return true;
     edgeMap[id] = edge;
@@ -659,7 +659,7 @@ namespace bagel_gui {
     return update;
   }
 
-  bool BagelModel::updateNode(unsigned long nodeId, configmaps::ConfigMap node) {
+  bool BagelModel::updateNode(unsigned long nodeId, configmaps::ConfigMap& node) {
     if(nodeMap.find(nodeId) == nodeMap.end()) return false;
     nodeMap[nodeId] = node;
     return true;

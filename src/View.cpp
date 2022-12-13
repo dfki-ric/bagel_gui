@@ -342,17 +342,18 @@ namespace bagel_gui {
   }
 
   void View::updateMap(const ConfigMap &map) {
+    ConfigMap updatedMap(map);
     if(updateNodeId) {
-      if(!model->updateNode(updateNodeId, map)) {
+      if(!model->updateNode(updateNodeId, updatedMap)) {
         return;
       }
     }
     else {
-      if(!model->updateEdge(0, map)) {
+      if(!model->updateEdge(0, updatedMap)) {
         return;
       }
     }
-    view->updateMap(map);
+    view->updateMap(updatedMap);
   }
 
   void View::updateNodeMap(const std::string &nodeName, const ConfigMap &map) {
@@ -362,10 +363,11 @@ namespace bagel_gui {
       return;
     }
     unsigned long nodeId = nodeIdMap[node.get()];
-    if(!model->updateNode(nodeId, map)) {
+    ConfigMap updatedMap(map);
+    if(!model->updateNode(nodeId, updatedMap)) {
       return;
     }
-    node->updateMap(map);
+    node->updateMap(updatedMap);
     if(nodeId == updateNodeId) {
       dWidget->updateConfigMap("", node->getMap());
     }
