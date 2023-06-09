@@ -1018,6 +1018,18 @@ void BagelGui::closeCurrentTab()
     return strings;
   }
 
+  configmaps::ConfigMap BagelGui::getGlobalConfig() {
+    return globalConfig;
+  }
+
+  void BagelGui::setGlobalConfig(configmaps::ConfigMap &config) {
+    globalConfig = config;
+  }
+
+  void BagelGui::updateGlobalConfig(configmaps::ConfigMap &config) {
+    globalConfig.append(config);
+  }
+
 } // end of namespace bagel_gui
 
 DESTROY_LIB(bagel_gui::BagelGui)

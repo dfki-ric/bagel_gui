@@ -128,6 +128,10 @@ namespace bagel_gui {
     std::vector<std::string> getInPortContextStrings(std::string nodeName, std::string portName);
     std::vector<std::string> getOutPortContextStrings(std::string nodeName, std::string portName);
 
+    configmaps::ConfigMap getGlobalConfig();
+    void setGlobalConfig(configmaps::ConfigMap &config);
+    void updateGlobalConfig(configmaps::ConfigMap &config);
+
   private:
     mars::main_gui::BaseWidget *dwBase;
     mars::config_map_gui::DataWidget *dw;
@@ -136,7 +140,7 @@ namespace bagel_gui {
     mars::plugins::BehaviorGraphMARS::BehaviorGraphMARS *bgMars;
 #endif
     std::string loadPath, loadedGraphFile;
-    configmaps::ConfigMap config;
+    configmaps::ConfigMap config, globalConfig;
     GraphicsTimer *timer;
     QTabWidget *mainWidget;
     SlotWrapper *slotWrapper;
