@@ -350,6 +350,8 @@ namespace bagel_gui {
     }
     else {
       if(!model->updateEdge(0, updatedMap)) {
+      if (!model->updateEdge(updatedMap["id"], updatedMap))
+      {
         return;
       }
     }

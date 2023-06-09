@@ -467,7 +467,7 @@ namespace bagel_gui {
 
   bool BagelModel::updateEdge(unsigned long id, configmaps::ConfigMap& edge) {
     // todo: bug here
-    if(edgeMap.find(id) == edgeMap.end()) return true;
+    if(edgeMap.find(id) == edgeMap.end()) return false;
     edgeMap[id] = edge;
     return true;
   }
