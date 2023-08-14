@@ -19,7 +19,15 @@ endif()
 
 add_definitions(-DBAGEL_DEFAULT_RESOURCES_PATH=\"${CMAKE_INSTALL_PREFIX}/share\")
 
-pkg_check_modules(OSGQT openscenegraph-osgQt5)
+set (QT_USE_QTOPENGL TRUE)
+setup_qt()
+
+if(USE_QT5)
+    pkg_check_modules(OSGQT openscenegraph-osgQt5)
+else(USE_QT5)
+    pkg_check_modules(OSGQT openscenegraph-osgQt)
+endif()
+
 if(OSGQT_FOUND)
 find_package(OpenSceneGraph REQUIRED osgManipulator osgViewer osgFX osgShadow osgParticle osgTerrain osgDB osgGA osgWidget osgText osgUtil)
 
@@ -33,9 +41,6 @@ endif()
 
 include_directories(${OPENSCENEGRAPH_INCLUDE_DIRS})
 link_directories(${OPENSCENEGRAPH_LIBRARY_DIRS})
-
-set (QT_USE_QTOPENGL TRUE)
-setup_qt()
 
 set (CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${OPENSCENEGRAPH_INCLUDE_DIRS})
 CHECK_INCLUDE_FILE_CXX("osg/Version" HAVE_OSG_VERSION_H)
