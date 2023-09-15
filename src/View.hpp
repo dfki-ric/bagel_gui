@@ -89,6 +89,9 @@ namespace bagel_gui {
     void restoreLayout();
     configmaps::ConfigMap getLayout();
     void applyLayout(configmaps::ConfigMap &layout);
+    
+    bool hasChanges() const {return history.size() > 0;}
+    
 
     osg_graph_viz::Node* addNode(configmaps::ConfigMap node);
     configmaps::ConfigMap getTypeInfo(const std::string &nodeType);
