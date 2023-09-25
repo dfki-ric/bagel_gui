@@ -131,6 +131,8 @@ namespace bagel_gui {
     configmaps::ConfigMap getGlobalConfig();
     void setGlobalConfig(configmaps::ConfigMap &config);
     void updateGlobalConfig(configmaps::ConfigMap &config);
+    //get current Tab View
+    View* getCurrentTabView(){return currentTabView;}
 
   private:
     mars::main_gui::BaseWidget *dwBase;
