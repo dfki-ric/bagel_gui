@@ -29,6 +29,8 @@
 
 #include <assert.h>
 #include <dirent.h>         /* directory search */
+#include <algorithm>        // for std::find_if
+#include <cctype>           // for std::isspace
 
 extern "C" {
   typedef void (*node_info_t) (char **name, size_t *num_inputs,
@@ -374,15 +376,16 @@ namespace bagel_gui {
     }
   }
 
-  const configmaps::ConfigMap* View::getNodeMap(const std::string &nodeName) {
+  const configmaps::ConfigMap *View::getNodeMap(const std::string &nodeName)
+  {
     osg::ref_ptr<osg_graph_viz::Node> node = getNodeByName(nodeName);
-    if(!node.valid()) {
-      fprintf(stderr, "ERROR: getNodeMap cannot find node by name: %s!\n", nodeName.c_str());
-      return NULL;
+    if (!node.valid())
+    {
+      //fprintf(stderr, "ERROR: getNodeMap cannot find node by name: %s!\n", nodeName.c_str());
+      return nullptr;
     }
     return &(node->getMap());
   }
-
   // This method is called from loading or import functionality
   void View::addNode(osg_graph_viz::NodeInfo *info, double x, double y,
                      unsigned long *id, bool onLoad, bool reload) {
@@ -671,11 +674,33 @@ namespace bagel_gui {
   {
     if(useForceLayout) layout->step();
   }
+  std::string trim(const std::string &str)
+  {
+    // Find the first non-whitespace character from the beginning
+    size_t start = 0;
+    while (start < str.length() && std::isspace(str[start]))
+    {
+      ++start;
+    }
+
+    // Find the first non-whitespace character from the end
+    size_t end = str.length();
+    while (end > start && std::isspace(str[end - 1]))
+    {
+      --end;
+    }
+
+    // Extract the trimmed substring
+    return (start < end) ? str.substr(start, end - start) : "";
+  }
 
   osg::ref_ptr<osg_graph_viz::Node> View::getNodeByName(const std::string &name) {
+    std::string trimmedName = trim(name);
+
     std::map<unsigned long, osg::ref_ptr<osg_graph_viz::Node> >::iterator it;
     for(it=nodeMap.begin(); it!=nodeMap.end(); ++it) {
-      if(it->second->getName() == name) {
+      if (it->second->getName() == trimmedName)
+      {
         return it->second;
       }
     }
