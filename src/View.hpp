@@ -76,6 +76,8 @@ namespace bagel_gui {
     std::string getOutPortName(std::string nodeName, unsigned long index);
     osg_graph_viz::NodeInfo getNodeInfo(const std::string &name);
     void clearGraph();
+    void undo() override;
+    void redo() override;
     void updateNodeMap(const std::string &nodeName,
                        const configmaps::ConfigMap &map);
     const configmaps::ConfigMap* getNodeMap(const std::string &nodeName);
@@ -120,6 +122,7 @@ namespace bagel_gui {
     mars::config_map_gui::DataWidget *dWidget;
     std::string confDir, resourcesPath, modelName;
     unsigned long lastAdd;
+    ssize_t historyIndex = -1;
 
     // node info container
     std::map<unsigned long, osg::ref_ptr<osg_graph_viz::Node> > nodeMap;
@@ -138,6 +141,13 @@ namespace bagel_gui {
     std::string handleNodeName(std::string name, std::string type);
     osg::ref_ptr<osg_graph_viz::Node> getNodeByName(const std::string&);
     unsigned long getNodeId(const std::string &name);
+    /*
+     * Since we are saving history before we remove a node, when we click a history item to be applied
+     * from the history widget, it must clear the graph to load the history state, the problem is
+     * clearGraph() calls again the removeNode(), which also saves a history entry which we don't want to do when clearing graph.
+     * So this flag tells us if graph is being cleared or not so we don't save history when clearing the graph
+     */
+    bool clearing_graph{false};
   }; // end of class definition View
 
 } // end of namespace bagel_bui
