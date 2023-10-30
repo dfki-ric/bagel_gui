@@ -1003,6 +1003,9 @@ namespace bagel_gui {
       QAction action1("delete edge", this);
       connect(&action1, SIGNAL(triggered()), this, SLOT(contextRemoveEdge()));
       contextMenu.addAction(&action1);
+      QAction action2("decouple", this);
+      connect(&action2, SIGNAL(triggered()), this, SLOT(contextDecoupleEdge()));
+      contextMenu.addAction(&action2);
       // todo convert to correct position
       contextMenu.exec(viz->mapToGlobal(QPoint(x*viz->width(),
                                                (1-y)*viz->height())));
@@ -1021,7 +1024,13 @@ namespace bagel_gui {
       view->removeEdge(contextEdge.get());
     }
   }
-
+  void View::contextDecoupleEdge()
+  {
+    if (contextEdge.valid())
+    {
+      mainLib->decouple();
+    }
+  }
   void View::toggleInputInterface() {
     if(contextNode.valid() && contextPort >= 0) {
       ConfigMap map = contextNode->getMap();
