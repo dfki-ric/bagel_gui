@@ -75,6 +75,7 @@ namespace bagel_gui {
     std::string getInPortName(std::string nodeName, unsigned long index);
     std::string getOutPortName(std::string nodeName, unsigned long index);
     osg_graph_viz::NodeInfo getNodeInfo(const std::string &name);
+    void cloneNodeToView(configmaps::ConfigMap node);
     void clearGraph();
     void undo() override;
     void redo() override;
