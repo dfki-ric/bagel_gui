@@ -117,7 +117,7 @@ qt4_wrap_cpp ( QT_MOC_HEADER_SRC ${QT_MOC_HEADER} )
 endif (${USE_QT5})
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${QT_MOC_HEADER_SRC})
-
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 if (${USE_QT5})
 qt5_use_modules(${PROJECT_NAME} Widgets OpenGL)
 endif (${USE_QT5})

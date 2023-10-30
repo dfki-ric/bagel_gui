@@ -29,6 +29,8 @@
 
 #include <assert.h>
 #include <dirent.h>         /* directory search */
+#include <algorithm>        // for std::find_if
+#include <cctype>           // for std::isspace
 
 extern "C" {
   typedef void (*node_info_t) (char **name, size_t *num_inputs,
@@ -206,6 +208,11 @@ namespace bagel_gui {
     std::list<osg::ref_ptr<osg_graph_viz::Node> >::iterator it;
     if(nodeIdMap.find(node) != nodeIdMap.end()) {
       unsigned long id = nodeIdMap[node];
+      if (not clearing_graph)
+      {
+        std::cout << "Saving history before removing node...\n";
+        addHistoryEntry();
+      }
 
       if(!model->removeNode(id)) return false;
       nodeIdMap.erase(node);
@@ -374,11 +381,13 @@ namespace bagel_gui {
     }
   }
 
-  const configmaps::ConfigMap* View::getNodeMap(const std::string &nodeName) {
+  const configmaps::ConfigMap *View::getNodeMap(const std::string &nodeName)
+  {
     osg::ref_ptr<osg_graph_viz::Node> node = getNodeByName(nodeName);
-    if(!node.valid()) {
-      fprintf(stderr, "ERROR: getNodeMap cannot find node by name: %s!\n", nodeName.c_str());
-      return NULL;
+    if (!node.valid())
+    {
+      //fprintf(stderr, "ERROR: getNodeMap cannot find node by name: %s!\n", nodeName.c_str());
+      return nullptr;
     }
     return &(node->getMap());
   }
@@ -632,6 +641,7 @@ namespace bagel_gui {
   }
 
   void View::clearGraph() {
+    clearing_graph = true;
     size_t t;
     nextNodeId = nextEdgeId = nextOrderNumber = 1;
     while(nodeMap.begin() != nodeMap.end()) {
@@ -643,8 +653,34 @@ namespace bagel_gui {
         return;
       }
     }
+      clearing_graph = false;
   }
-
+  void View::undo()
+  {
+    static ssize_t index = -1;
+    if (history.empty())
+      return;
+    else if (index == 0)
+      return;
+    else if (index == -1)
+      index = static_cast<ssize_t>(history.size() - 1);
+    else
+      index--;
+    loadHistory(index);
+  }
+  void View::redo()
+  {
+    static ssize_t index = -1;
+    if (history.empty())
+      return;
+    else if (static_cast<size_t>(index) == history.size() - 1)
+      return;
+    else if (index == -1)
+      index = 0;
+    else
+      index++;
+    loadHistory(index);
+  }
   bool View::groupNodes(const std::string &parent, const std::string &child) {
     unsigned long groupId=0, nodeId;
     osg::ref_ptr<osg_graph_viz::Node> node;
@@ -675,7 +711,8 @@ namespace bagel_gui {
   osg::ref_ptr<osg_graph_viz::Node> View::getNodeByName(const std::string &name) {
     std::map<unsigned long, osg::ref_ptr<osg_graph_viz::Node> >::iterator it;
     for(it=nodeMap.begin(); it!=nodeMap.end(); ++it) {
-      if(it->second->getName() == name) {
+      if (it->second->getName() == mars::utils::trim(name))
+      {
         return it->second;
       }
     }
