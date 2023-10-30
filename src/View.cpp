@@ -213,7 +213,6 @@ namespace bagel_gui {
         std::cout << "Saving history before removing node...\n";
         addHistoryEntry();
       }
-
       if(!model->removeNode(id)) return false;
       nodeIdMap.erase(node);
       nodeMap.erase(id);
@@ -391,7 +390,6 @@ namespace bagel_gui {
     }
     return &(node->getMap());
   }
-
   // This method is called from loading or import functionality
   void View::addNode(osg_graph_viz::NodeInfo *info, double x, double y,
                      unsigned long *id, bool onLoad, bool reload) {
@@ -805,7 +803,83 @@ namespace bagel_gui {
       view->setViewPos(x, y);
     }
   }
+  void View::cloneNodeToView(ConfigMap node)
+  {
+    try
+    {
+      std::string type = node["type"];
+      std::string name = node["name"];
 
+      osg_graph_viz::NodeInfo info;
+      info.redrawEdges = true;
+      info.numInputs = 0;
+      info.numOutputs = 0;
+
+      if (type == "INPUT")
+      {
+        info.numOutputs = 1;
+        if (node.hasKey("outputs"))
+        {
+          if (trim(node["outputs"][0]["name"].getString()) == "")
+          {
+            node["outputs"][0]["name"] = "out1";
+          }
+        }
+        else
+        {
+          node["outputs"][0]["name"] = "out1";
+        }
+      }
+      else if (type == "OUTPUT")
+      {
+        for (auto it2 = node["inputs"].begin();
+             it2 != node["inputs"].end(); ++it2)
+        {
+          ++info.numInputs;
+          if (!it2->hasKey("name") || trim((*it2)["name"].getString()) == "")
+          {
+            std::stringstream ss;
+            ss << "in" << info.numInputs;
+            (*it2)["name"] = ss.str();
+          }
+        }
+      }
+      else
+      {
+        info.numOutputs = 0;
+        for (auto it2 = node["inputs"].begin();
+             it2 != node["inputs"].end(); ++it2)
+        {
+          ++info.numInputs;
+          if (!it2->hasKey("name") || trim((*it2)["name"].getString()) == "")
+          {
+            std::stringstream ss;
+            ss << "in" << info.numInputs;
+            (*it2)["name"] = ss.str();
+          }
+        }
+
+        for (auto it2 = node["outputs"].begin();
+             it2 != node["outputs"].end(); ++it2)
+        {
+          ++info.numOutputs;
+          if (!it2->hasKey("name") || trim((*it2)["name"].getString()) == "")
+          {
+            std::stringstream ss;
+            ss << "out" << info.numOutputs;
+            (*it2)["name"] = ss.str();
+          }
+        }
+      }
+      info.map = node;
+      info.map["order"] = nextOrderNumber++;
+      infoMap[type] = info;
+    }
+    catch (const std::exception &e)
+    {
+      std::cerr << e.what() << std::endl;
+    }
+  }
   osg_graph_viz::Node* View::addNode(ConfigMap node) {
     std::string type = node["type"];
     std::string name = node["name"];
@@ -820,6 +894,13 @@ namespace bagel_gui {
     if (found!=std::string::npos) {
       name = "";
     }
+    // check if we have the type in the list
+    if (infoMap.find(type) == infoMap.end())
+    {
+      fprintf(stderr, "could not add node because type '%s' unknown. So adding f bufferMap\n", type.c_str());
+      cloneNodeToView(node);
+    }
+
     addNode(type, name, 0, 0);
     return nodeMap[lastAdd];
   }
