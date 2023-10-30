@@ -108,6 +108,7 @@ namespace bagel_gui {
     void nodeContextClicked();
     void inPortContextClicked();
     void outPortContextClicked();
+    void contextDecoupleEdge();
 
   private:
     BagelGui *mainLib;
