@@ -12,7 +12,8 @@
     <depend package="simulation/mars/common/gui/config_map_gui" />
     <depend package="simulation/mars/common/graphics/osg_text" />
     <depend package="bagel/osg_graph_viz" />
-    <depend package="qt4-opengl" />
+    <depend package="qt4-opengl" optional="1" />
+    <depend package="qt5-opengl" optional="1" />
     <depend package="external/osgQt" />
     <tags>needs_opt</tags>
 </package>
