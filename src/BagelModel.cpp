@@ -9,7 +9,7 @@
 #include "BagelGui.hpp"
 #include "BagelModel.hpp"
 #include <osg_graph_viz/Node.hpp>
-#include <mars/utils/misc.h>
+#include <mars_utils/misc.h>
 #include <dirent.h>
 #include <QDir>
 

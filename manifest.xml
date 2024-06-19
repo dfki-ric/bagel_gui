@@ -4,13 +4,13 @@
    </description>
     <depend package="simulation/lib_manager" />
     <depend package="simulation/configmaps" />
-    <depend package="simulation/mars/common/utils" />
-    <depend package="simulation/mars/common/gui/main_gui" />
-    <depend package="simulation/mars/common/gui/gui_app" />
-    <depend package="simulation/mars/common/gui/lib_manager_gui" />
-    <depend package="simulation/mars/common/gui/cfg_manager_gui" />
-    <depend package="simulation/mars/common/gui/config_map_gui" />
-    <depend package="simulation/mars/common/graphics/osg_text" />
+    <depend package="simulation/utils" />
+    <depend package="simulation/gui_collection/main_gui" />
+    <depend package="simulation/gui_collection/gui_app" />
+    <depend package="simulation/gui_collection/lib_manager_gui" />
+    <depend package="simulation/gui_collection/cfg_manager_gui" />
+    <depend package="simulation/gui_collection/config_map_gui" />
+    <depend package="simulation/graphics_collection/osg_text" />
     <depend package="bagel/osg_graph_viz" />
     <depend package="qt4-opengl" optional="1" />
     <depend package="qt5-opengl" optional="1" />

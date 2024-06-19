@@ -16,7 +16,7 @@
 #include "NodeInfoWidget.hpp"
 #include "HistoryWidget.hpp"
 
-#include <mars/utils/misc.h>
+#include <mars_utils/misc.h>
 
 #include <QHBoxLayout>
 #include <QSplitter>

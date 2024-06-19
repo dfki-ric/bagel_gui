@@ -11,14 +11,14 @@
 
 // set define if you want to extend the gui
 
-#include <mars/cfg_manager/CFGManagerInterface.h>
+#include <cfg_manager/CFGManagerInterface.h>
 #include "NodeLoader.hpp"
 #include "ModelInterface.hpp"
 #include <string>
 #include <osg_graph_viz/View.hpp>
 #include <osgViewer/CompositeViewer>
 #ifndef Q_MOC_RUN
-#include <mars/config_map_gui/DataWidget.h>
+#include <config_map_gui/DataWidget.h>
 #endif
 
 namespace bagel_gui {

@@ -7,7 +7,7 @@
 #ifndef BAGEL_GUI_HISTORY_WIDGET_HPP
 #define BAGEL_GUI_HISTORY_WIDGET_HPP
 
-#include <mars/main_gui/BaseWidget.h>
+#include <main_gui/BaseWidget.h>
 
 #include <QWidget>
 #include <QListView>

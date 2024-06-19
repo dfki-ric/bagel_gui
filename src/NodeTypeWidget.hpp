@@ -11,7 +11,7 @@
 #warning "NodeTypeWidget.hpp"
 #endif
 
-#include <mars/main_gui/BaseWidget.h>
+#include <main_gui/BaseWidget.h>
 
 #include <QWidget>
 #include <QListWidget>

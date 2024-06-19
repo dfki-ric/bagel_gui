@@ -11,7 +11,7 @@
 #warning "NodeInfoWidget.hpp"
 #endif
 
-#include <mars/main_gui/BaseWidget.h>
+#include <main_gui/BaseWidget.h>
 #include <configmaps/ConfigMap.hpp>
 
 #include <QWidget>

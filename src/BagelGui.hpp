@@ -11,15 +11,15 @@
 // set define if you want to extend the gui
 #include <lib_manager/LibInterface.hpp>
 
-#include <mars/cfg_manager/CFGManagerInterface.h>
+#include <cfg_manager/CFGManagerInterface.h>
 #include "NodeLoader.hpp"
 #include "ModelInterface.hpp"
 #include "PluginInterface.hpp"
 #include "View.hpp"
 #include <string>
-#include <mars/main_gui/MenuInterface.h>
-#include <mars/main_gui/GuiInterface.h>
-#include <mars/main_gui/BaseWidget.h>
+#include <main_gui/MenuInterface.h>
+#include <main_gui/GuiInterface.h>
+#include <main_gui/BaseWidget.h>
 #include <osg_graph_viz/View.hpp>
 #include <osgViewer/CompositeViewer>
 #ifdef BGM
