@@ -31,6 +31,7 @@
 #include <dirent.h>         /* directory search */
 #include <algorithm>        // for std::find_if
 #include <cctype>           // for std::isspace
+#include <regex>
 
 extern "C" {
   typedef void (*node_info_t) (char **name, size_t *num_inputs,
@@ -313,6 +314,12 @@ namespace bagel_gui {
   }
 
   std::string View::handleNodeName(std::string name, std::string type) {
+    static const std::regex re("::(.*)::");
+    std::smatch match;
+    if (std::regex_search(type, match, re))
+    {
+      name = match[1];
+    }
     std::string newName = name;
     { // generate name if not given
       if(newName == "") {
