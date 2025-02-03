@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QRegExp>
 
+#include <regex>
 namespace bagel_gui {
 
   NodeTypeWidget::NodeTypeWidget(mars::cfg_manager::CFGManagerInterface *cfg,
@@ -62,7 +63,14 @@ namespace bagel_gui {
 
   void NodeTypeWidget::addNode() {
     if(!newNode.empty()) {
-      osgBG->addNode(newNode);
+      static const std::regex re("::(.*)::");
+      std::smatch match;
+      std::string name;
+      if (std::regex_search(newNode, match, re) && match.size() == 2)
+      {
+        name = match[1];
+      }
+      osgBG->addNode(newNode, name);
     }
   }
 
