@@ -23,9 +23,14 @@ namespace bagel_gui {
 
     virtual void currentModelChanged(ModelInterface *model) {}
     virtual void nodeContextClicked(std::string name) {}
+    virtual void edgeContextClicked(std::string name) {}
     virtual void inPortContextClicked(std::string name) {}
     virtual void outPortContextClicked(std::string name) {}
     virtual std::vector<std::string> getNodeContextStrings(const std::string &name) {
+      return std::vector<std::string>();
+    }
+    virtual std::vector<std::string> getEdgeContextStrings(const std::string &name)
+    {
       return std::vector<std::string>();
     }
     virtual std::vector<std::string> getInPortContextStrings(const std::string &nodeName, const std::string &portName) {

@@ -381,6 +381,26 @@ namespace bagel_gui {
       dWidget->updateConfigMap("", node->getMap());
     }
   }
+  void View::updateEdgeMap(const std::string &edgeName, const ConfigMap &map)
+  {
+    osg::ref_ptr<osg_graph_viz::Edge> edge = getEdgeByName(edgeName);
+    if (!edge.valid())
+    {
+      fprintf(stderr, "ERROR: updateNodeMap cannot find edge by name: %s!\n", edgeName.c_str());
+      return;
+    }
+    ConfigMap updatedMap(map);
+
+    if (!model->updateEdge(updatedMap["id"], updatedMap))
+    {
+      std::cout << "Failed to update edge" << std::endl;
+      return;
+    }
+
+    edge->updateMap(updatedMap);
+    dWidget->setConfigMap("", edge->getMap());
+   // dWidget->updateConfigMap("", edge->getMap());
+  }
 
   const configmaps::ConfigMap *View::getNodeMap(const std::string &nodeName)
   {
@@ -391,6 +411,16 @@ namespace bagel_gui {
       return nullptr;
     }
     return &(node->getMap());
+  }
+  const configmaps::ConfigMap *View::getEdgeMap(const std::string &edgeName)
+  {
+    osg::ref_ptr<osg_graph_viz::Edge> edge = getEdgeByName(edgeName);
+    if (!edge.valid())
+    {
+      fprintf(stderr, "ERROR: getEdgeMap cannot find edge by name: %s!\n", edgeName.c_str());
+      return nullptr;
+    }
+    return &(edge->getMap());
   }
   // This method is called from loading or import functionality
   void View::addNode(osg_graph_viz::NodeInfo *info, double x, double y,
@@ -719,6 +749,19 @@ namespace bagel_gui {
     return NULL;
   }
 
+  osg::ref_ptr<osg_graph_viz::Edge> View::getEdgeByName(const std::string &name)
+  {
+    for (auto it = edgeList.begin(); it != edgeList.end(); ++it)
+    {
+      configmaps::ConfigMap map = (*it)->getMap();
+      std::string edgeName = map["name"];
+      if (edgeName == mars::utils::trim(name))
+      {
+        return *it;
+      }
+    }
+    return NULL;
+  }
   unsigned long View::getNodeId(const std::string &name) {
     std::map<unsigned long, osg::ref_ptr<osg_graph_viz::Node> >::iterator it;
     for(it=nodeMap.begin(); it!=nodeMap.end(); ++it) {
@@ -1000,6 +1043,33 @@ namespace bagel_gui {
     }
     if(edge) {
       QMenu contextMenu("Context menu");
+      // fprintf(stderr, "edge %d\n", edge);
+
+      contextEdge = edge;
+      QAction action1("delete edge", this);
+      connect(&action1, SIGNAL(triggered()), this, SLOT(contextRemoveEdge()));
+      contextMenu.addAction(&action1);
+      QAction action2("decouple", this);
+      connect(&action2, SIGNAL(triggered()), this, SLOT(contextDecoupleEdge()));
+      contextMenu.addAction(&action2);
+      configmaps::ConfigMap edgeMap = edge->getMap();
+      std::string edgeName = edgeMap["name"];
+      std::vector<std::string> cStrings = mainLib->getEdgeContextStrings(edgeName);
+      std::vector<QAction *> actions;
+      for (auto label : cStrings)
+      {
+        QAction *action = new QAction(label.c_str(), this);
+        connect(action, SIGNAL(triggered()), this, SLOT(edgeContextClicked()));
+        contextMenu.addAction(action);
+      }
+      contextMenu.exec(viz->mapToGlobal(QPoint(x * viz->width(),
+                                               (1 - y) * viz->height())));
+      for (auto action : actions)
+      {
+        delete action;
+      }
+#if 0
+      QMenu contextMenu("Context menu");
       //fprintf(stderr, "node %d\n", node);
       contextEdge = edge;
       QAction action1("delete edge", this);
@@ -1008,9 +1078,13 @@ namespace bagel_gui {
       QAction action2("decouple", this);
       connect(&action2, SIGNAL(triggered()), this, SLOT(contextDecoupleEdge()));
       contextMenu.addAction(&action2);
+      QAction action3("configure edge", this);
+      connect(&action3, SIGNAL(triggered()), this, SLOT(edgeContextClicked()));
+      contextMenu.addAction(&action3);
       // todo convert to correct position
       contextMenu.exec(viz->mapToGlobal(QPoint(x*viz->width(),
                                                (1-y)*viz->height())));
+  #endif
       return;
     }
   }
@@ -1087,7 +1161,14 @@ namespace bagel_gui {
       mainLib->nodeContextClicked(action->text().toStdString());
     }
   }
-
+  void View::edgeContextClicked()
+  {
+    QAction *action = dynamic_cast<QAction *>(sender());
+    if (action)
+    {
+      mainLib->edgeContextClicked(action->text().toStdString());
+    }
+  }
   void View::inPortContextClicked() {
     QAction *action = dynamic_cast<QAction*>(sender());
     if(action) {
