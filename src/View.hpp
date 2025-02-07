@@ -155,8 +155,6 @@ namespace bagel_gui {
      * So this flag tells us if graph is being cleared or not so we don't save history when clearing the graph
      */
     bool clearing_graph{false};
-  signals:
-    void requestEdgeConfiguration(const configmaps::ConfigMap &edgeConfig);
 
   }; // end of class definition View
 

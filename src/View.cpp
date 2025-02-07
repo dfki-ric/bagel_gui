@@ -386,7 +386,7 @@ namespace bagel_gui {
     osg::ref_ptr<osg_graph_viz::Edge> edge = getEdgeByName(edgeName);
     if (!edge.valid())
     {
-      fprintf(stderr, "ERROR: updateNodeMap cannot find edge by name: %s!\n", edgeName.c_str());
+      fprintf(stderr, "ERROR: updateEdgeMap cannot find edge by name: %s!\n", edgeName.c_str());
       return;
     }
     ConfigMap updatedMap(map);
