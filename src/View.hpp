@@ -81,7 +81,10 @@ namespace bagel_gui {
     void redo() override;
     void updateNodeMap(const std::string &nodeName,
                        const configmaps::ConfigMap &map);
+    void updateEdgeMap(const std::string &edgeName, const configmaps::ConfigMap &map);
+
     const configmaps::ConfigMap* getNodeMap(const std::string &nodeName);
+    const configmaps::ConfigMap *getEdgeMap(const std::string &edgeName);
 
     void forceDirectedLayoutStep();
     void setUseForceLayout(bool v) {useForceLayout = v;}
@@ -106,6 +109,7 @@ namespace bagel_gui {
     void toggleInputInterface();
     void toggleOutputInterface();
     void nodeContextClicked();
+    void edgeContextClicked();
     void inPortContextClicked();
     void outPortContextClicked();
     void contextDecoupleEdge();
@@ -142,6 +146,7 @@ namespace bagel_gui {
 
     std::string handleNodeName(std::string name, std::string type);
     osg::ref_ptr<osg_graph_viz::Node> getNodeByName(const std::string&);
+    osg::ref_ptr<osg_graph_viz::Edge> getEdgeByName(const std::string &);
     unsigned long getNodeId(const std::string &name);
     /*
      * Since we are saving history before we remove a node, when we click a history item to be applied
@@ -150,6 +155,9 @@ namespace bagel_gui {
      * So this flag tells us if graph is being cleared or not so we don't save history when clearing the graph
      */
     bool clearing_graph{false};
+  signals:
+    void requestEdgeConfiguration(const configmaps::ConfigMap &edgeConfig);
+
   }; // end of class definition View
 
 } // end of namespace bagel_bui

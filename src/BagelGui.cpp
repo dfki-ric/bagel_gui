@@ -535,10 +535,25 @@ namespace bagel_gui {
       currentTabView->updateNodeMap(nodeName, map);
     }
   }
+  void BagelGui::updateEdgeMap(const std::string &edgeName, const ConfigMap &map)
+  {
+    if (currentTabView)
+    {
+      currentTabView->updateEdgeMap(edgeName, map);
+    }
+  }
 
   const configmaps::ConfigMap* BagelGui::getNodeMap(const std::string &nodeName) {
     if(currentTabView) {
       return currentTabView->getNodeMap(nodeName);
+    }
+    return NULL;
+  }
+  const configmaps::ConfigMap *BagelGui::getEdgeMap(const std::string &edgeName)
+  {
+    if (currentTabView)
+    {
+      return currentTabView->getEdgeMap(edgeName);
     }
     return NULL;
   }
@@ -972,6 +987,13 @@ void BagelGui::closeCurrentTab()
       plugin->nodeContextClicked(s);
     }
   }
+  void BagelGui::edgeContextClicked(const std::string s)
+  {
+    for (auto plugin : plugins)
+    {
+      plugin->edgeContextClicked(s);
+    }
+  }
 
   void BagelGui::inPortContextClicked(const std::string s) {
     for(auto plugin: plugins) {
@@ -989,7 +1011,22 @@ void BagelGui::closeCurrentTab()
     std::vector<std::string> strings;
     for(auto plugin: plugins) {
       std::vector<std::string> r = plugin->getNodeContextStrings(name);
-      for(auto s: r) {
+      for (auto s : r)
+      {
+        strings.push_back(s);
+      }
+    }
+    return strings;
+  }
+
+  std::vector<std::string> BagelGui::getEdgeContextStrings(std::string name)
+  {
+    std::vector<std::string> strings;
+    for (auto plugin : plugins)
+    {
+      std::vector<std::string> r = plugin->getEdgeContextStrings(name);
+      for (auto s : r)
+      {
         strings.push_back(s);
       }
     }

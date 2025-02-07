@@ -106,7 +106,9 @@ namespace bagel_gui {
     std::string getOutPortName(std::string nodeName, unsigned long index);
     void updateNodeMap(const std::string &nodeName,
                        const configmaps::ConfigMap &map);
+    void updateEdgeMap(const std::string &edgeName, const configmaps::ConfigMap &map);
     const configmaps::ConfigMap* getNodeMap(const std::string &nodeName);
+    const configmaps::ConfigMap *getEdgeMap(const std::string &edgeName);
     void mapChanged();
     void updateViewSize();
     void setViewFilter(const std::string &filter, int value);
@@ -122,9 +124,11 @@ namespace bagel_gui {
     void removePlugin(PluginInterface *plugin);
     void removeNode(const std::string &name);
     void nodeContextClicked(const std::string s);
+    void edgeContextClicked(const std::string s);
     void inPortContextClicked(const std::string s);
     void outPortContextClicked(const std::string s);
     std::vector<std::string> getNodeContextStrings(std::string name);
+    std::vector<std::string> getEdgeContextStrings(std::string name);
     std::vector<std::string> getInPortContextStrings(std::string nodeName, std::string portName);
     std::vector<std::string> getOutPortContextStrings(std::string nodeName, std::string portName);
 
